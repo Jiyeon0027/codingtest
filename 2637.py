@@ -10,24 +10,20 @@ n = int(input())
 # n : 완제품
 m = int(input())
 
-arr = [[0 for _ in range(n+1)] for _ in range(n+1)]
+arr = [[[0,0] for _ in range(n+1)] for _ in range(n+1)]
 for _ in range(m):
     x,y,k = map(int,input().split())
-    arr[x][y] = k
+    arr[x][y] = [k,0]
 
-count = [0] * (n+1)
+basic = 0
+for i in range(m):
+    if sum([sum(k) for k in arr[i]]) == 0:
+        basic = i
 
-def check_sub(part, mult):
-    if sum(arr[part]) == 0 : # 기본부품
-        count[part] += mult 
-        return
-    
-    for sub in range(1,n+1):
-        if arr[part][sub] > 0:
-            check_sub(sub,mult * arr[part][sub])
-    
-    
-check_sub(n,1)
-for i in range(1,n):
-    if sum(arr[i]) ==0:
-        print(f"{i} {count[i]}")
+print(*arr, sep = '\n')
+print("-----------------")
+
+# for i in range(n, basic,-1):
+#     for j in range(n, basic, -1):
+#         if arr[i][j][0] > 0 :
+            
